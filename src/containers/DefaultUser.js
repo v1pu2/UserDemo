@@ -1,7 +1,8 @@
 import React,{Component} from 'react'
-import { View, Text, TouchableHighlight, TouchableOpacity, FlatList, StyleSheet } from 'react-native'
+import { View, Text, TouchableHighlight, TouchableOpacity, FlatList, Button,TextInput,StyleSheet,Platform ,AsyncStorage} from 'react-native'
 import CommonStyles from '../theme/CommonStyles'
 import Colors from '../theme/Colors'
+
 
 export default class DefaultUser extends Component{
     constructor(props) {
@@ -31,3 +32,4 @@ export default class DefaultUser extends Component{
 const styles = StyleSheet.create({
    
 });
+

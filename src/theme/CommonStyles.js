@@ -22,7 +22,7 @@ export default CommonStyles={
         height:80,
         justifyContent: 'space-around',
         paddingLeft: 10,
-        elevation: 1
+        elevation: 1,
       },
       fab: {
         position: 'absolute',
@@ -40,5 +40,6 @@ export default CommonStyles={
         fontSize: 40,
         color: 'white',
        
-      }
+      },
+      iconStyle:{ margin: 5, justifyContent: "center" },
 }
