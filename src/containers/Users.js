@@ -3,15 +3,19 @@ import { View, Text, TouchableHighlight, TouchableOpacity, FlatList, StyleSheet,
 import CommonStyles from '../theme/CommonStyles'
 import Colors from '../theme/Colors'
 import { Icon } from 'react-native-elements';
+import { ListItem, SearchBar } from 'react-native-elements';
+
 export default class Users extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             users: [],
-            isRated: true,
-        }
-
+            isRated: false,
+            loading: true,
+            error: null,
+        };
+        this.arrayholder = [];
     }
 componentDidMount(){
     this.LoadUsers();
@@ -29,12 +33,8 @@ componentDidMount(){
             console.log('listttttttt'+JSON.stringify(list))
             this.setState({users:list})
             console.log('in users data' + this.state.users);
-            //                 let newState = this.state.users;
-            // newState.push(JSON.parse(data));
-            // this.setState({this.state.users:newState});
-
-            // Alert.alert('in users->' + JSON.parse(data));
-            // }
+            this.arrayholder = list;
+            console.log('arrayholder--'+this.arrayholder);
 
         } catch (error) {
             // Error retrieving data
@@ -48,6 +48,45 @@ componentDidMount(){
             onGoBack: () => this.LoadUsers()
         });
     }
+    renderSeparator = () => {
+        return (
+          <View
+            style={{
+              height: 1,
+              width: '86%',
+              backgroundColor: '#CED0CE',
+              marginLeft: '14%',
+            }}
+          />
+        );
+      };
+      searchFilterFunction = text => {
+        this.setState({
+          value: text,
+        });
+    
+        const newData = this.arrayholder.filter(item => {
+            const itemData=`${item.toUpperCase()}`;
+          const textData = text.toUpperCase();
+    
+          return itemData.indexOf(textData) > -1;
+        });
+        this.setState({
+          users: newData,
+        });
+      };
+      renderHeader = () => {
+        return (
+          <SearchBar
+            placeholder="Type Here..."
+            lightTheme
+            round
+            onChangeText={text => this.searchFilterFunction(text)}
+            autoCorrect={false}
+            value={this.state.value}
+          />
+        );
+      };
     render() {
 
         return (
@@ -72,12 +111,16 @@ componentDidMount(){
                                 <Icon size={24} color="gray" name="delete" />
                             </View>
                             <View style={CommonStyles.iconStyle}>
-                                {this.state.isRated == 'true' ? <Icon size={24} name="star" color="gray" /> :
-                                    <Icon size={24} name="star" color={Colors.fabColor} />
+                                {this.state.isRated == 'true' ? <Icon size={24} name="star" color={Colors.fabColor} /> :
+                                    <Icon size={24} name="star" color="gray" />
                                 }
                             </View>
                         </View>
                     </View>}
+
+                     ItemSeparatorComponent={this.renderSeparator}
+                     ListHeaderComponent={this.renderHeader}
+
                 />
 
                 <TouchableOpacity onPress={() => this.click()} style={CommonStyles.fab}>
