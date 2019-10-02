@@ -147,7 +147,7 @@ const validateEmail = email => {
     };
   
     return (
-      <SafeAreaView style={{flex:1,backgroundColor:'yellow'}}>
+      <SafeAreaView style={{flex:1,}}>
         <View>
           <View>
             <Text >Personal details</Text>
@@ -184,33 +184,38 @@ const validateEmail = email => {
   
                     return (
                       <View  key={index}>
-                        <View style={{flex:1,flexDirection:'row'}}>
-                          <Text>{index + 1}. </Text>
-                          <View>
-                            <Text >{item.name}</Text>
-                            <Text >{item.email}</Text>
-                            <Text >{item.phone}</Text>
+                        <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
+                            <View style={{flexDirection:'row',height:40,width:'70%',marginLeft:10}}>
+                          <Text style={{alignSelf:'center',fontSize:14}}>{index + 1}. </Text>
+                          <View style={{justifyContent:'center'}}>
+                            <Text style={{fontSize:14}} >{item.name}</Text>
+                            {/* <Text >{item.email}</Text>
+                            <Text >{item.phone}</Text> */}
                           </View>
-                        </View>
-                        <View style={{flex:1,flexDirection:'row'}}>
+                          </View>
+                        {/* </View> */}
+                        <View style={{flex:1,flexDirection:'row',height:40,width:'30%'}}>
                           <TouchableOpacity
                             onPress={() => clearData(index)}
-                            // style={styles.ph}>
+                            style={{margin: 5, justifyContent: "center"}}
                             >
                             <Icon name="close" size={20} />
                           </TouchableOpacity>
                           <TouchableOpacity
+                           style={{margin: 5, justifyContent: "center"}}
                             onPress={() => highlightData(index)}
                             // style={styles.ph}
                             >
                             <Icon name="star" size={20} color={highlightColor} />
                           </TouchableOpacity>
                           <TouchableOpacity
+                           style={{margin: 5, justifyContent: "center"}}
                             onPress={() => changeData(index)}
                             // style={styles.ph}
                             >
                             <Icon name="create" size={20} />
                           </TouchableOpacity>
+                        </View>
                         </View>
                       </View>
                     );
@@ -229,33 +234,3 @@ const validateEmail = email => {
   });
   
   export default Tasks;
-
-// export default class DefaultUser extends Component{
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-           
-//         }
-//     }
-
-//     // click() {
-//     //     this.props.navigation.navigate('RegisterScreen');
-//     // }
-//     render() {
-//       //  const { data } = this.state;
-//         return (
-//             <View style={CommonStyles.container}>
-//                 <View style={CommonStyles.heading}>
-//                     <Text style={CommonStyles.headingText}>Default User</Text>
-//                 </View>
-
-               
-//             </View>
-//         )
-//     }
-// }
-
-// const styles = StyleSheet.create({
-   
-// });
-

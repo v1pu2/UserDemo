@@ -12,38 +12,29 @@ export default class Users extends Component {
         this.state = {
             users: [],
             isRated: false,
-            // isLoading: false,
+            loading: true,
             error: null,
-            seed: 1,
-            page: 1,
-            isRefreshing: false,
         };
         this.arrayholder = [];
     }
-    componentDidMount() {
-        this.LoadUsers();
-    }
+componentDidMount(){
+    this.LoadUsers();
+}
     LoadUsers = async () => {
-        // const { seed, page } = this.state;
-        // this.setState({ isLoading: true });
+        const { users, users1 } = this.state;
         console.log('*******************')
         try {
             const data = await AsyncStorage.getItem('LIST');
             // if (this.state.users !== null) {
             // We have data!!
             console.log('from async users' + JSON.parse(data));
-
-            const list = JSON.parse(data);
-            console.log('listttttttt' + JSON.stringify(list))
-            this.setState({ users: list })
+            
+            const list=JSON.parse(data);
+            console.log('listttttttt'+JSON.stringify(list))
+            this.setState({users:list})
             console.log('in users data' + this.state.users);
             this.arrayholder = list;
-            console.log('arrayholder--' + this.arrayholder);
-
-            // this.setState({
-            //     users: page === 1 ? list : [...users, ...list],
-            //     isRefreshing: false,
-            //   });
+            console.log('arrayholder--'+this.arrayholder);
 
         } catch (error) {
             // Error retrieving data
@@ -51,22 +42,7 @@ export default class Users extends Component {
         }
         console.log('user list in user--' + this.state.users);
     };
-    handleRefresh = () => {
-        this.setState({
-            seed: this.state.seed + 1,
-            isRefreshing: true,
-        }, () => {
-            this.LoadUsers();
-        });
-    };
 
-    handleLoadMore = () => {
-        this.setState({
-            page: this.state.page + 1
-        }, () => {
-            this.LoadUsers();
-        });
-    };
     click() {
         this.props.navigation.navigate('RegisterScreen', {
             onGoBack: () => this.LoadUsers()
@@ -74,46 +50,44 @@ export default class Users extends Component {
     }
     renderSeparator = () => {
         return (
-            <View
-                style={{
-                    height: 1,
-                    width: '106%',
-                    backgroundColor: '#CED0CE',
-
-                }}
-            />
+          <View
+            style={{
+              height: 1,
+              backgroundColor: '#CED0CE',
+              
+            }}
+          />
         );
-    };
-    searchFilterFunction = text => {
+      };
+      searchFilterFunction = text => {
         this.setState({
-            value: text,
+          value: text,
         });
-
+    
         const newData = this.arrayholder.filter(item => {
-            const itemData = `${item.toUpperCase()}`;
-            const textData = text.toUpperCase();
-
-            return itemData.indexOf(textData) > -1;
+            const itemData=`${item.toUpperCase()}`;
+          const textData = text.toUpperCase();
+    
+          return itemData.indexOf(textData) > -1;
         });
         this.setState({
-            users: newData,
+          users: newData,
         });
-    };
-    renderHeader = () => {
-
+      };
+      renderHeader = () => {
         return (
-            <SearchBar
-                placeholder="Type Here..."
-                lightTheme
-                round
-                onChangeText={text => this.searchFilterFunction(text)}
-                autoCorrect={false}
-                value={this.state.value}
-            />
+          <SearchBar
+            placeholder="Type Here..."
+            lightTheme
+            round
+            onChangeText={text => this.searchFilterFunction(text)}
+            autoCorrect={false}
+            value={this.state.value}
+          />
         );
-    };
+      };
     render() {
-        const { users, isRefreshing } = this.state;
+
         return (
             <View style={CommonStyles.container}>
                 <StatusBar backgroundColor={Colors.fabColor} barStyle="light-content" />
@@ -123,12 +97,12 @@ export default class Users extends Component {
 
                 <FlatList
                     legacyImplementation={true}
-                    data={users}
-                    renderItem={({ item }) => <View style={{ flexDirection: 'row', width: '100%' }}>
-                        <View style={styles.textView}>
-                            <Text style={styles.textStyle}>{item}</Text>
+                    data={this.state.users}
+                    renderItem={({ item}) => <View style={{ flexDirection: 'row', width: '100%' }}>
+                        <View style={{ height: 60, width: '70%', justifyContent: 'center' }}>
+                            <Text style={{ justifyContent: 'center', alignItems: 'center', margin: 10, fontSize: 16 }}>{item}</Text>
                         </View>
-                        <View style={styles.iconView}>
+                        <View style={{ height: 60, width: '30%', flexDirection: 'row' }}>
                             <View style={CommonStyles.iconStyle}>
                                 <Icon size={24} color="gray" name="edit" />
                             </View>
@@ -142,12 +116,10 @@ export default class Users extends Component {
                             </View>
                         </View>
                     </View>}
-                    ItemSeparatorComponent={this.renderSeparator}
-                    ListHeaderComponent={this.renderHeader}
-                    refreshing={isRefreshing}
-                    onRefresh={this.handleRefresh}
-                    onEndReached={this.handleLoadMore}
-                    onEndThreshold={0}
+
+                     ItemSeparatorComponent={this.renderSeparator}
+                     ListHeaderComponent={this.renderHeader}
+
                 />
 
                 <TouchableOpacity onPress={() => this.click()} style={CommonStyles.fab}>
@@ -158,9 +130,3 @@ export default class Users extends Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    textStyle: { justifyContent: 'center', alignItems: 'center', margin: 10, fontSize: 16 },
-    iconView:{ height: 60, width: '30%', flexDirection: 'row' },
-    textView:{ height: 60, width: '70%', justifyContent: 'center' },
-});
