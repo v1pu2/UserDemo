@@ -3,8 +3,6 @@ import { View, Text, TextInput, TouchableHighlight, Alert, StyleSheet, AsyncStor
 import CommonStyles from '../theme/CommonStyles'
 import Colors from '../theme/Colors'
 
-
-
 var arrList = [];
 export default class RegisterScreen extends Component {
     constructor(props) {
@@ -13,8 +11,6 @@ export default class RegisterScreen extends Component {
         this.state = {
             tasks: [],
             name: '',
-
-            // name: '',
             // address: '',
             // email: '',
             // Password: '',
@@ -49,10 +45,8 @@ export default class RegisterScreen extends Component {
 
 
     onShow = async () => {
-        console.log('onshowwwwwwww');
         try {
             const data = await AsyncStorage.getItem('LIST');
-            // if (this.state.tasks !== null) {
             // We have data!!
             console.log('in register get' + JSON.parse(data));
             const list = JSON.parse(data);
@@ -70,7 +64,6 @@ export default class RegisterScreen extends Component {
     }
 
     render() {
-        // const { data } = this.state;
         return (
             <View style={CommonStyles.container}>
                 <View style={CommonStyles.heading}>
@@ -136,7 +129,6 @@ export default class RegisterScreen extends Component {
 const styles = StyleSheet.create({
     innercontainer: {
         flex: 1,
-
         justifyContent: 'center',
         marginLeft: 40,
         marginRight: 40
